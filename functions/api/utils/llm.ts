@@ -10,6 +10,34 @@ export interface LLMRequest {
   apiKey: string;
 }
 
+// Helper: Fetch with exponential backoff on 429 Rate Limit
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  maxRetries = 5,
+  initialDelay = 2000
+): Promise<Response> {
+  let retries = maxRetries;
+  let delay = initialDelay;
+
+  while (retries > 0) {
+    const response = await fetch(url, options);
+
+    if (response.status === 429) {
+      retries--;
+      if (retries === 0) {
+        return response;
+      }
+      // Wait before retrying (exponential backoff)
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      delay *= 2;
+      continue;
+    }
+    return response;
+  }
+  return fetch(url, options);
+}
+
 export async function callLLM({
   provider,
   model,
@@ -43,7 +71,7 @@ export async function callLLM({
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     
-    const response = await fetch(url, {
+    const response = await fetchWithRetry(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -85,7 +113,7 @@ export async function callLLM({
     messages.push({ role: 'user', content: prompt });
 
     const url = 'https://api.openai.com/v1/chat/completions';
-    const response = await fetch(url, {
+    const response = await fetchWithRetry(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -119,7 +147,7 @@ export async function callLLM({
     messages.push({ role: 'user', content: prompt });
 
     const url = 'https://api.anthropic.com/v1/messages';
-    const response = await fetch(url, {
+    const response = await fetchWithRetry(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
