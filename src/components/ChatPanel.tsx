@@ -38,7 +38,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editedPrompt, setEditedPrompt] = useState('');
   const [editedProvider, setEditedProvider] = useState('gemini');
-  const [editedModel, setEditedModel] = useState('gemini-2.5-flash');
+  const [editedModel, setEditedModel] = useState('gemini-1.5-flash');
   
   // Real-time listener state from Firebase/Cache
   const [realtimeState, setRealtimeState] = useState<{ agentId: string | null; status: string }>({ agentId: null, status: 'idle' });
@@ -87,7 +87,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
       setEditedModel(agent.model_name);
     } else {
       setEditedProvider('gemini');
-      setEditedModel('gemini-2.5-flash');
+      setEditedModel('gemini-1.5-flash');
     }
   };
 
@@ -227,7 +227,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
                           type="text"
                           value={editedModel}
                           onChange={(e) => setEditedModel(e.target.value)}
-                          placeholder="例如: gemini-2.5-flash"
+                          placeholder="例如: gemini-1.5-flash"
                           className="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-slate-200 outline-none focus:border-indigo-500"
                         />
                       </div>

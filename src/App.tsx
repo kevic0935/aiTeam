@@ -47,7 +47,7 @@ export default function App() {
     name: '',
     description: '',
     model_provider: 'gemini',
-    model_name: 'gemini-2.5-flash',
+    model_name: 'gemini-1.5-flash',
     temperature: 0.7,
     system_prompt: 'You are a helpful AI assistant.',
   });
@@ -212,7 +212,7 @@ export default function App() {
         name: '',
         description: '',
         model_provider: 'gemini',
-        model_name: 'gemini-2.5-flash',
+        model_name: 'gemini-1.5-flash',
         temperature: 0.7,
         system_prompt: 'You are a helpful AI assistant.',
       });
@@ -390,7 +390,7 @@ export default function App() {
                     required
                     value={agentForm.model_name}
                     onChange={(e) => setAgentForm({ ...agentForm, model_name: e.target.value })}
-                    placeholder="例如: gemini-2.5-flash"
+                    placeholder="例如: gemini-1.5-flash"
                     className="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
