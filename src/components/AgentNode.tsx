@@ -21,9 +21,9 @@ interface AgentNodeProps {
 export const AgentNode: React.FC<AgentNodeProps> = ({ data }) => {
   const getProviderColor = (provider: string) => {
     switch (provider.toLowerCase()) {
-      case 'gemini': return 'text-green-400 border-green-500/30 bg-green-500/10';
-      case 'openai': return 'text-indigo-400 border-indigo-500/30 bg-indigo-500/10';
-      case 'anthropic': return 'text-orange-400 border-orange-500/30 bg-orange-500/10';
+      case 'gemini': return 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10';
+      case 'openai': return 'text-sky-400 border-sky-500/30 bg-sky-500/10';
+      case 'anthropic': return 'text-amber-400 border-amber-500/30 bg-amber-500/10';
       default: return 'text-slate-400 border-slate-500/30 bg-slate-500/10';
     }
   };
@@ -33,7 +33,7 @@ export const AgentNode: React.FC<AgentNodeProps> = ({ data }) => {
       className={`glass-panel p-4 min-w-[240px] max-w-[280px] border-2 transition-all duration-300 ${
         data.isExecuting 
           ? 'executing-node border-indigo-500 shadow-lg shadow-indigo-500/20' 
-          : 'border-slate-800'
+          : 'border-slate-800 hover:border-slate-700'
       }`}
     >
       {/* Handles */}
@@ -63,7 +63,7 @@ export const AgentNode: React.FC<AgentNodeProps> = ({ data }) => {
             <button 
               onClick={(e) => { e.stopPropagation(); data.onEdit!(data.id); }}
               className="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition"
-              title="Edit Agent settings"
+              title="編輯 Agent 設定"
             >
               <Settings2 size={14} />
             </button>
@@ -72,14 +72,14 @@ export const AgentNode: React.FC<AgentNodeProps> = ({ data }) => {
             <button 
               onClick={(e) => { e.stopPropagation(); data.onDelete!(data.id); }}
               className="p-1 rounded text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition"
-              title="Delete Agent"
+              title="刪除 Agent"
             >
               <Trash2 size={14} />
             </button>
           )}
         </div>
       </div>
-
+      
       {/* Description */}
       {data.description && (
         <p className="text-[11px] text-slate-400 line-clamp-2 mt-1 mb-2 leading-relaxed border-t border-slate-800 pt-2">
@@ -89,8 +89,8 @@ export const AgentNode: React.FC<AgentNodeProps> = ({ data }) => {
 
       {/* Info footer */}
       <div className="flex items-center justify-between text-[10px] text-slate-500 mt-2 border-t border-slate-800 pt-2">
-        <span>Model: <b className="text-slate-400">{data.model_name}</b></span>
-        <span>Temp: <b className="text-slate-400">{data.temperature}</b></span>
+        <span>模型：<b className="text-slate-400">{data.model_name}</b></span>
+        <span>溫度：<b className="text-slate-400">{data.temperature}</b></span>
       </div>
 
       <Handle 

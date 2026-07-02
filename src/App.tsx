@@ -173,7 +173,7 @@ export default function App() {
 
   // Create new conversation
   const handleNewConversation = async () => {
-    const title = prompt('Enter conversation name:', `Chat ${conversations.length + 1}`);
+    const title = prompt('請輸入對話名稱：', `對話 ${conversations.length + 1}`);
     if (!title) return;
 
     try {
@@ -269,15 +269,15 @@ export default function App() {
         <div className="p-3">
           <button
             onClick={handleNewConversation}
-            className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/50 text-xs font-semibold text-slate-200 transition cursor-pointer"
+            className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 border border-indigo-500/20 text-xs font-semibold text-white shadow-lg shadow-indigo-600/10 active:scale-[0.98] transition-all cursor-pointer"
           >
-            <Plus size={14} /> New Conversation
+            <Plus size={14} /> 新建對話
           </button>
         </div>
 
         {/* Conversations List */}
         <div className="flex-1 overflow-y-auto px-2 space-y-1">
-          <div className="text-[10px] uppercase font-bold text-slate-500 px-3 mb-2 tracking-wider">Conversations</div>
+          <div className="text-[10px] uppercase font-bold text-slate-500 px-3 mb-2 tracking-wider">歷史對話</div>
           {conversations.map((conv) => (
             <button
               key={conv.id}
@@ -297,13 +297,13 @@ export default function App() {
         {/* Footer: User profile / settings */}
         <div className="p-4 border-t border-slate-800 bg-slate-950/40 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 border border-slate-700">
+            <div className="w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400 border border-indigo-500/30 shadow-inner">
               <User size={16} />
             </div>
             <div>
-              <p className="text-xs font-semibold text-slate-300 leading-none">Developer</p>
+              <p className="text-xs font-semibold text-slate-300 leading-none">開發人員</p>
               <span className="text-[10px] text-emerald-500 flex items-center gap-1 mt-1 font-semibold">
-                ● Local Dev
+                ● 本地開發環境
               </span>
             </div>
           </div>
@@ -348,27 +348,27 @@ export default function App() {
 
             <h3 className="text-base font-bold text-slate-100 mb-4 flex items-center gap-2">
               <Bot size={18} className="text-indigo-400" />
-              {editingAgent ? 'Edit Agent Configuration' : 'Create New Agent Node'}
+              {editingAgent ? '編輯 Agent 節點設定' : '建立新 Agent 節點'}
             </h3>
 
             <form onSubmit={handleSaveAgent} className="space-y-4 text-sm">
               <div className="grid grid-cols-2 gap-3">
                 {/* Agent Name */}
                 <div>
-                  <label className="text-xs text-slate-400 block mb-1 font-semibold">Agent Name</label>
+                  <label className="text-xs text-slate-400 block mb-1 font-semibold">Agent 名稱</label>
                   <input
                     type="text"
                     required
                     value={agentForm.name}
                     onChange={(e) => setAgentForm({ ...agentForm, name: e.target.value })}
-                    placeholder="e.g. Writer Agent"
+                    placeholder="例如: 寫作助理"
                     className="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
                 {/* Model Provider */}
                 <div>
-                  <label className="text-xs text-slate-400 block mb-1 font-semibold">Model Provider</label>
+                  <label className="text-xs text-slate-400 block mb-1 font-semibold">模型供應商</label>
                   <select
                     value={agentForm.model_provider}
                     onChange={(e) => setAgentForm({ ...agentForm, model_provider: e.target.value })}
@@ -384,13 +384,13 @@ export default function App() {
               <div className="grid grid-cols-2 gap-3">
                 {/* Model Name */}
                 <div>
-                  <label className="text-xs text-slate-400 block mb-1 font-semibold">Model Name</label>
+                  <label className="text-xs text-slate-400 block mb-1 font-semibold">模型名稱</label>
                   <input
                     type="text"
                     required
                     value={agentForm.model_name}
                     onChange={(e) => setAgentForm({ ...agentForm, model_name: e.target.value })}
-                    placeholder="e.g. gemini-2.5-flash"
+                    placeholder="例如: gemini-2.5-flash"
                     className="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
@@ -398,7 +398,7 @@ export default function App() {
                 {/* Temperature */}
                 <div>
                   <label className="text-xs text-slate-400 block mb-1 font-semibold">
-                    Temperature ({agentForm.temperature})
+                    溫度設定 ({agentForm.temperature})
                   </label>
                   <input
                     type="range"
@@ -414,25 +414,25 @@ export default function App() {
 
               {/* Description */}
               <div>
-                <label className="text-xs text-slate-400 block mb-1 font-semibold">Description</label>
+                <label className="text-xs text-slate-400 block mb-1 font-semibold">功能描述</label>
                 <input
                   type="text"
                   value={agentForm.description}
                   onChange={(e) => setAgentForm({ ...agentForm, description: e.target.value })}
-                  placeholder="Short description of the agent's role"
+                  placeholder="簡短描述此 Agent 的職掌或分工"
                   className="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
               {/* System Prompt */}
               <div>
-                <label className="text-xs text-slate-400 block mb-1 font-semibold">System Instructions (Prompt)</label>
+                <label className="text-xs text-slate-400 block mb-1 font-semibold">系統提示詞 (System Prompt)</label>
                 <textarea
                   required
                   rows={5}
                   value={agentForm.system_prompt}
                   onChange={(e) => setAgentForm({ ...agentForm, system_prompt: e.target.value })}
-                  placeholder="Define role, constraints, and instructions..."
+                  placeholder="定義此 Agent 的角色、工作規範與回覆指南..."
                   className="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-indigo-500 resize-none font-mono text-xs"
                 />
               </div>
@@ -444,13 +444,13 @@ export default function App() {
                   onClick={() => setIsModalOpen(false)}
                   className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold cursor-pointer"
                 >
-                  Cancel
+                  取消
                 </button>
                 <button
                   type="submit"
                   className="px-4 py-2 rounded-lg glow-btn text-white font-semibold cursor-pointer"
                 >
-                  Save Agent Node
+                  儲存 Agent 設定
                 </button>
               </div>
             </form>

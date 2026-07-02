@@ -112,7 +112,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
   // Get agent name by running status
   const getExecutingAgentName = () => {
     const runningAgentId = realtimeState.agentId || executingAgentId;
-    if (!runningAgentId) return 'Agent Team';
+    if (!runningAgentId) return 'Agent 團隊';
     const agent = agents.find(a => a.id === runningAgentId);
     return agent ? agent.name : 'Agent';
   };
@@ -120,13 +120,13 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
   return (
     <div className="flex flex-col h-full w-full glass-panel border-0 border-l border-slate-800 rounded-none bg-slate-950/40">
       {/* Header */}
-      <div className="p-4 border-b border-slate-800 flex justify-between items-center">
+      <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/30">
         <div>
-          <h3 className="font-bold text-slate-100 text-sm tracking-wider">AI AGENT COLLABORATION CHAT</h3>
+          <h3 className="font-bold text-slate-100 text-sm tracking-wider">AI 代理協作工作流對話</h3>
           <p className="text-[10px] text-slate-500 m-0">
             {cacheService.isRealtime() 
-              ? '⚡️ Real-time Firebase Sync active' 
-              : '💾 In-memory State Sync active (Fallback)'}
+              ? '⚡️ Firebase 即時同步已啟用' 
+              : '💾 本地記憶體狀態同步運作中 (備用方案)'}
           </p>
         </div>
         
@@ -134,7 +134,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
         {(isExecuting || realtimeState.status === 'executing') && (
           <div className="flex items-center gap-1.5 text-xs text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded-full border border-indigo-500/20">
             <RefreshCw size={12} className="animate-spin" />
-            <span>{getExecutingAgentName()} executing...</span>
+            <span>{getExecutingAgentName()} 執行中...</span>
           </div>
         )}
       </div>
@@ -144,12 +144,12 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
         {!conversationId ? (
           <div className="h-full flex flex-col items-center justify-center text-slate-500 gap-2">
             <Sparkles size={24} className="text-slate-600 animate-pulse" />
-            <p className="text-xs">Create or select a conversation to start testing</p>
+            <p className="text-xs">請建立或選擇一個歷史對話以開始測試</p>
           </div>
         ) : messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-slate-500 gap-2">
             <Sparkles size={24} className="text-indigo-500/50" />
-            <p className="text-xs">Send a message to trigger the agent workflow</p>
+            <p className="text-xs">輸入訊息以觸發多 Agent 協作工作流</p>
           </div>
         ) : (
           messages.map((msg) => {
@@ -199,18 +199,18 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
 
                 {/* In-place Prompt Tuning Editor */}
                 {isEditing && (
-                  <div className="w-full max-w-[90%] mt-2 p-4 glass-card border-indigo-500/50 rounded-xl space-y-3 z-10">
+                  <div className="w-full max-w-[90%] mt-2 p-4 glass-card border-indigo-500/50 rounded-xl space-y-3 z-10 shadow-xl">
                     <div className="flex items-center justify-between pb-2 border-b border-slate-800">
                       <h5 className="text-xs font-semibold text-indigo-400 flex items-center gap-1">
-                        <Sparkles size={12} /> Tweak Agent Prompt & Model
+                        <Sparkles size={12} /> 微調 Agent 提示詞與模型
                       </h5>
-                      <span className="text-[10px] text-slate-500">Updates Agent & regenerates path</span>
+                      <span className="text-[10px] text-slate-500">將更新節點並重算後續路徑</span>
                     </div>
 
                     {/* Model Config Grid */}
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="text-[10px] text-slate-500 uppercase tracking-wider block mb-1">Provider</label>
+                        <label className="text-[10px] text-slate-500 uppercase tracking-wider block mb-1">供應商 (Provider)</label>
                         <select
                           value={editedProvider}
                           onChange={(e) => setEditedProvider(e.target.value)}
@@ -222,12 +222,12 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
                         </select>
                       </div>
                       <div>
-                        <label className="text-[10px] text-slate-500 uppercase tracking-wider block mb-1">Model</label>
+                        <label className="text-[10px] text-slate-500 uppercase tracking-wider block mb-1">模型 (Model)</label>
                         <input
                           type="text"
                           value={editedModel}
                           onChange={(e) => setEditedModel(e.target.value)}
-                          placeholder="e.g. gemini-2.5-flash"
+                          placeholder="例如: gemini-2.5-flash"
                           className="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-slate-200 outline-none focus:border-indigo-500"
                         />
                       </div>
@@ -235,7 +235,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
 
                     {/* System Prompt Input */}
                     <div>
-                      <label className="text-[10px] text-slate-500 uppercase tracking-wider block mb-1">System Prompt</label>
+                      <label className="text-[10px] text-slate-500 uppercase tracking-wider block mb-1">系統提示詞 (System Prompt)</label>
                       <textarea
                         value={editedPrompt}
                         onChange={(e) => setEditedPrompt(e.target.value)}
@@ -250,13 +250,13 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
                         onClick={() => setEditingMessageId(null)}
                         className="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold cursor-pointer"
                       >
-                        Cancel
+                        取消
                       </button>
                       <button
                         onClick={() => handleSaveTweak(msg.id)}
                         className="px-3 py-1.5 rounded glow-btn text-white font-semibold flex items-center gap-1 cursor-pointer"
                       >
-                        <RefreshCw size={12} className="animate-spin-slow" /> Update & Re-run
+                        <RefreshCw size={12} className="animate-spin-slow" /> 儲存並重新執行
                       </button>
                     </div>
                   </div>
@@ -274,14 +274,14 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={!conversationId ? "Select a conversation first" : "Ask the agent team..."}
+          placeholder={!conversationId ? "請先建立或選擇一個對話" : "向 Agent 團隊發問..."}
           disabled={!conversationId || isExecuting}
           className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={!conversationId || isExecuting || !input.trim()}
-          className="p-2.5 rounded-xl glow-btn text-white disabled:opacity-50 disabled:shadow-none flex items-center justify-center cursor-pointer"
+          className="p-2.5 rounded-xl glow-btn text-white disabled:opacity-50 disabled:shadow-none flex items-center justify-center cursor-pointer transition-all active:scale-[0.96]"
         >
           <Send size={18} />
         </button>

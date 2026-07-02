@@ -381,7 +381,7 @@ app.post('/chat/message', async (c) => {
     const userMsgId = generateUUID();
     await c.env.DB.prepare(`
       INSERT INTO messages (id, conversation_id, sender_type, sender_id, sender_name, content)
-      VALUES (?, ?, ?, NULL, 'User', ?)
+      VALUES (?, ?, 'user', NULL, 'User', ?)
     `).bind(userMsgId, conversation_id, content).run();
 
     // Execute multi-agent pipeline

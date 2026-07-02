@@ -81,14 +81,14 @@ export const Canvas: React.FC<CanvasProps> = ({
 
   // Handle agent delete
   const handleDeleteAgent = async (agentId: string) => {
-    if (!confirm('Are you sure you want to delete this agent? All its connections will also be removed.')) return;
+    if (!confirm('您確定要刪除此 Agent 嗎？所有與其相關的連線也將被一併移除。')) return;
     try {
       const res = await fetch(`/api/agents/${agentId}`, { method: 'DELETE' });
       if (res.ok) {
         onRefresh();
       } else {
         const data = await res.json();
-        alert(`Failed to delete agent: ${data.error}`);
+        alert(`刪除 Agent 失敗：${data.error}`);
       }
     } catch (err) {
       console.error(err);
@@ -113,7 +113,7 @@ export const Canvas: React.FC<CanvasProps> = ({
         // Refresh local data to match coordinates
         onRefresh();
       } catch (err) {
-        console.error('Failed to update node position:', err);
+        console.error('更新節點位置失敗：', err);
       }
     },
     [agents, onRefresh]
@@ -146,7 +146,7 @@ export const Canvas: React.FC<CanvasProps> = ({
           onRefresh();
         } else {
           const data = await res.json();
-          alert(`Failed to connect agents: ${data.error}`);
+          alert(`連結 Agent 失敗：${data.error}`);
         }
       } catch (err) {
         console.error(err);
@@ -162,7 +162,7 @@ export const Canvas: React.FC<CanvasProps> = ({
         try {
           await fetch(`/api/connections/${edge.id}`, { method: 'DELETE' });
         } catch (err) {
-          console.error(`Failed to delete connection ${edge.id}:`, err);
+          console.error(`刪除連線失敗 ${edge.id}:`, err);
         }
       }
       onRefresh();
@@ -176,9 +176,9 @@ export const Canvas: React.FC<CanvasProps> = ({
       <div className="absolute top-4 left-4 z-10 flex gap-2">
         <button
           onClick={() => onEditAgent(null)}
-          className="glow-btn flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white cursor-pointer"
+          className="glow-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-white cursor-pointer shadow-lg hover:shadow-indigo-500/20 active:scale-[0.98] transition-all"
         >
-          <Plus size={14} /> Add Agent Node
+          <Plus size={14} /> 新增 Agent 節點
         </button>
       </div>
 
