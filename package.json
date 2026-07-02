@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "pages:dev": "wrangler pages dev --compatibility-date=2024-04-03 --port=8788 --proxy=5173 --d1 DB=ai-team-db -- npm run dev"
+    "pages:dev": "npx concurrently --kill-others -p \"[{name}]\" -n \"vite,wrangler\" -c \"blue,yellow\" \"npm run dev\" \"wrangler pages dev --compatibility-date=2024-04-03 --port=8788 --proxy=5173 --d1 DB=ai-team-db\""
   },
   "dependencies": {
     "@xyflow/react": "^12.11.1",
