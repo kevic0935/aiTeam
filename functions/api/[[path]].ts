@@ -9,6 +9,7 @@ type Bindings = {
   GEMINI_API_KEY?: string;
   OPENAI_API_KEY?: string;
   ANTHROPIC_API_KEY?: string;
+  OPENROUTER_API_KEY?: string;
 };
 
 const app = new Hono<{ Bindings: Bindings }>().basePath('/api');
@@ -324,6 +325,7 @@ async function executeAgentPipeline(
     if (agent.model_provider === 'gemini') apiKey = env.GEMINI_API_KEY || '';
     else if (agent.model_provider === 'openai') apiKey = env.OPENAI_API_KEY || '';
     else if (agent.model_provider === 'anthropic') apiKey = env.ANTHROPIC_API_KEY || '';
+    else if (agent.model_provider === 'openrouter') apiKey = env.OPENROUTER_API_KEY || '';
 
     // Invoke the LLM
     let outputText = '';

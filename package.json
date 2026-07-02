@@ -11,7 +11,6 @@
     "pages:dev": "npx concurrently --kill-others -p \"[{name}]\" -n \"vite,wrangler\" -c \"blue,yellow\" \"npm run dev\" \"wrangler pages dev --compatibility-date=2024-04-03 --port=8788 --proxy=5173 --d1 DB=ai-team-db\""
   },
   "dependencies": {
-    "@xyflow/react": "^12.11.1",
     "firebase": "^12.15.0",
     "hono": "^4.12.27",
     "lucide-react": "^1.23.0",

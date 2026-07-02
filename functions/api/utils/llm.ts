@@ -172,5 +172,46 @@ export async function callLLM({
     return data.content?.[0]?.text || '';
   }
 
+  if (provider === 'openrouter') {
+    const messages = [];
+
+    // System prompt
+    if (systemPrompt) {
+      messages.push({ role: 'system', content: systemPrompt });
+    }
+
+    // History
+    for (const h of history) {
+      messages.push({ role: h.role, content: h.content });
+    }
+
+    // Current prompt
+    messages.push({ role: 'user', content: prompt });
+
+    const url = 'https://openrouter.ai/api/v1/chat/completions';
+    const response = await fetchWithRetry(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'http://localhost:8788',
+        'X-Title': 'ANTIGRAVITY Agent Studio',
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        temperature,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`OpenRouter API error: ${response.status} - ${errorText}`);
+    }
+
+    const data: any = await response.json();
+    return data.choices?.[0]?.message?.content || '';
+  }
+
   throw new Error(`Unsupported LLM provider: ${provider}`);
 }
